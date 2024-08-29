@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script>
+        var mealName="";
+        var adonName="";
+
+        var mealCost=0;
+        var adonCost=0;
+
+        function OrderClick(){
+
+            document.getElementById("lblName").innerHTML=document.getElementById("txtName").value;
+            document.getElementById("lblMobile").innerHTML=document.getElementById("txtMobile").value;
+            var imgMeal=document.getElementById("imgMeal");
+            var optBurger=document.getElementById("optBurger");
+            var optBucket=document.getElementById("optBucket");
+
+            if(optBurger.checked)
+            {
+                mealName = optBurger.value;
+                mealCost = 120;
+                imgMeal.src="public/images/burger.jpeg";
+            }
+
+            if(optBucket.checked)
+            {
+                mealName=optBucket.value;
+                mealCost = 150;
+                imgMeal.src="public/images/chicken-bucket.jpeg";
+            }
+
+            var optnuggets=document.getElementById("optNuggets");
+            var optcrusher=document.getElementById("optCrusher");
+
+            if(optnuggets.checked)
+            {
+                adonName += optnuggets.value + "<br";
+                adonCost = 80;
+                mealCost +=adonCost;
+            }
+
+            if(optcrusher.checked)
+            {
+                adonName +=optCrusher.value +"<br>";
+                adonCost = 80;
+                mealCost +=adonCost;
+            }
+
+            document.getElementById("lblMeal").innerHTML=mealName;
+            document.getElementById("lblAdon").innerHTML=adonName;
+            document.getElementById("lblTotal").innerHTML=mealCost.toLocaleString('en-in',{style:'currency' ,currency:'INR'});            
+        }
+
+    </script>
+</head>
+<body >
+    <header class="container-fluid">
+        <img src="public/images/kfc banner.jpg" width="100%" height="100%">
+    </header>
+    <section class="mt-2">
+        <div class="accordion" id="kfc">
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button data-bs-target="#customer" data-bs-toggle="collapse" class="btn btn-danger w-100 mt-2"> Customer Details </button>
+                </div>
+                <div class="accordion-collapse collapse show" id="customer" data-bs-parent="#kfc">
+                    <div class="accordion-body bg-danger text-white mt-2 ">
+                        <dl>
+                            <dt> Customer Name </dt>
+                            <dd><input type="text" class="form-control" id="txtName"></dd>
+                            <dt> Mobile Number </dt>
+                            <dd><input type="text" class="form-control" id="txtMobile"></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button data-bs-target="#meal" data-bs-toggle="collapse" class=" mt-1 btn btn-danger w-100"> Select Your Meal </button>
+                </div>
+                <div class=" mt-1accordion-collapse collapse bg-danger text-white" data-bs-parent="#kfc" id="meal">
+                    <div class="row">
+                        <div class="col text-center">
+                            <h3> Burger </h3>
+                            <img src="public/images/burger.jpeg" width="50%">
+                            <p>
+                                <input type="radio" name="meal" value="burger" id="optBurger" class="form-check-input"> <label class="h4"> &#8377 120/- </label>
+                            </p>
+                        </div>
+                        <div class="col">
+                            <h3> Bucket </h3>
+                            <img src="public/images/chicken-bucket.jpeg" width="50%">
+                            <p>
+                                <input type="radio" name="meal" value="bucket" id="optBucket" class="form-check-input"> <label class="h4"> &#8377 150/- </label>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <button data-bs-target="#Adon" data-bs-toggle="collapse" class=" mt-1 btn btn-danger w-100"> Select AD-ON's </button>
+                </div>
+                <div class="accordion-collapse collapse bg-danger text-white mt-1" data-bs-parent="#kfc" id="Adon">
+                    <div class="row">
+                        <div class="col text-center">
+                            <h3> Nuggets </h3>
+                            <img src="public/images/nuggets.jpeg" width="50%">
+                            <p>
+                                <input type="checkbox" name="meal" value="nuggets" id="optNuggets" class="form-check-input"> <label class="h4"> &#8377 80/- </label>
+                            </p>
+                        </div>
+                        <div class="col">
+                            <h3> Crusher </h3>
+                            <img src="public/images/crusher.jpeg" width="50%">
+                            <p>
+                                <input type="checkbox" name="meal" value="crusher" id="optCrusher" class="form-check-input"> <label class="h4"> &#8377 80/- </label>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button data-bs-target="#summary" data-bs-toggle="modal" class="btn btn-warning w-100" onclick="OrderClick()"> Place Order </button>
+        <div class="modal fade" id="summary">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2> Your Bill Summary </h2>
+                        <button class="btn btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <dl>
+                                    <dt> Customer </dt>
+                                    <dd id="lblName"></dd>
+                                    <dt> Mobile </dt>
+                                    <dd id="lblMobile"></dd>
+                                    <dt> Meal </dt>
+                                    <dd id="lblMeal"></dd>
+                                    <dt>AdOn</dt>
+                                    <dd id="lblAdon"></dd>
+                                    <dt>Total</dt>
+                                    <dd id="lblTotal" class="fw-bold text-danger"></dd>
+                                </dl>
+                            </div>
+                            <div class="col">
+                                <img width="100%" id="imgMeal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script  src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"> </script>   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
